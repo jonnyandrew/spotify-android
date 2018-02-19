@@ -1,0 +1,22 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
+        <item name="editTextStyle">@style/Widget.App.EditText</item>
+    </style>
+
+    <style name="Widget.App.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@color/colorLight</item>
+        <item name="android:color">@color/colorPrimary</item>
+    </style>
+
+    <style name="CardView.App" parent="CardView">
+        <item name="cardElevation">0dp</item>
+    </style>
+
+</resources>

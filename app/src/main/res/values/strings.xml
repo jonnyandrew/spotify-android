@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Spotify Demo</string>
+    <string name="empty_string" />
+
+    <string name="artists">Artists</string>
+    <string name="tracks">Tracks</string>
+
+    <string name="login_button">Log in with Spotify</string>
+    <string name="login_text">Lets get started! &#128640;</string>
+    <string name="login_success">Logged in successfully!</string>
+    <string name="login_failure">Log in failed.</string>
+    <string name="login_in_progress">Logging in…</string>
+
+    <string name="search_hint">Search</string>
+    <string name="search_failure">Couldn\'t find anything right now…</string>
+    <string name="search_in_progress">Finding beats…</string>
+
+    <string name="artist_failure">Couldn\'t find that artist right now…</string>
+    <string name="artist_in_progress">Getting the artist info…</string>
+
+    <string name="artist_popularity_high">This artist is super popular!</string>
+    <string name="artist_popularity_medium">This artist is gaining traction.</string>
+    <string name="artist_popularity_low">This artist appreciates your fandom.</string>
+
+    <string name="artist_followers">%1$d followers</string>
+</resources>
