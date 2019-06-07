@@ -4,8 +4,9 @@ import com.jonathan_andrew.spotify.domain.entities.Credentials
 import com.jonathan_andrew.spotify.domain.use_cases.UseCase
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
+import javax.inject.Inject
 
-class LoginUseCase(private val loginManager: LoginManager) : UseCase<LoginAction, LoginResult> {
+class LoginUseCase @Inject constructor(private val loginManager: LoginManager) : UseCase<LoginAction, LoginResult> {
     override fun apply(upstream: Observable<LoginAction>): ObservableSource<LoginResult> {
         return upstream.switchMap {
             loginManager.login()

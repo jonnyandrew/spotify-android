@@ -5,11 +5,12 @@ import com.jonathan_andrew.spotify.domain.entities.Credentials
 import com.jonathan_andrew.spotify.domain.use_cases.auth.AuthManager
 import io.reactivex.Observable
 import io.reactivex.Single
+import javax.inject.Inject
 
 /**
  * Stores and retrieves the API access token in the shared preferences.
  */
-class LocalAuthManager(
+class LocalAuthManager @Inject constructor(
         context: Context
 ) : AuthManager {
 

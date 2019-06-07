@@ -49,7 +49,7 @@ class SearchActivity : AppCompatActivity(), MviView<SearchUiEvent, SearchUiModel
         setupRecyclerView()
         searchInput.setIconifiedByDefault(false)
         searchInput.setQuery("Jackson", true)
-        presenter.begin()
+        presenter.begin(this)
         localSubscriptions.add(
                 recyclerAdapter.idOfArtistClicks.subscribe { artistId ->
                     navigateToArtistActivity(artistId)

@@ -6,49 +6,46 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.jakewharton.rxbinding2.view.RxView
-import com.jonathan_andrew.spotify.App
 import com.jonathan_andrew.spotify.R
-import com.jonathan_andrew.spotify.data.auth.RemoteLoginManager
-import com.jonathan_andrew.spotify.domain.use_cases.auth.LoginUseCase
+import com.jonathan_andrew.spotify.domain.entities.auth.LoginCallback
+import com.jonathan_andrew.spotify.domain.entities.auth.LoginRequestCode
+import com.jonathan_andrew.spotify.domain.entities.auth.LoginResultCode
 import com.jonathan_andrew.spotify.ui.MviView
 import com.jonathan_andrew.spotify.ui.search.SearchActivity
+import dagger.Binds
+import dagger.Provides
+import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.merge
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_login.*
+import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity(), MviView<LoginUiEvent, LoginUiModel> {
     companion object {
-        private val LOGIN_REQUEST_CODE = 1
+        private const val LOGIN_REQUEST_CODE = 1
 
         fun startActivity(context: Context) {
             context.startActivity(Intent(context, LoginActivity::class.java))
         }
     }
 
-    private val loginCallbacks: PublishSubject<String> = PublishSubject.create()
-    private val loginResultCodes: PublishSubject<Int> = PublishSubject.create()
+    @Inject
+    internal lateinit var presenter: LoginMviPresenter
 
-    private val presenter by lazy {
-        LoginMviPresenter(
-                this,
-                LoginUseCase(
-                        RemoteLoginManager(this,
-                                App.instance.authManager,
-                                loginCallbacks,
-                                loginResultCodes,
-                                LOGIN_REQUEST_CODE
-                        )
-                )
-        )
-    }
+    @Inject
+    internal lateinit var loginCallbacks: PublishSubject<LoginCallback>
+
+    @Inject
+    internal lateinit var loginResultCodes: PublishSubject<LoginResultCode>
 
     private var finished: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
         setContentView(R.layout.activity_login)
-        presenter.begin()
+        presenter.begin(this)
     }
 
     override val events: Observable<LoginUiEvent>
@@ -112,6 +109,18 @@ class LoginActivity : AppCompatActivity(), MviView<LoginUiEvent, LoginUiModel> {
         SearchActivity.startActivity(this)
     }
 
+    @dagger.Module
+    abstract class Module {
+        @dagger.Module
+        companion object {
+            @Provides
+            @JvmStatic
+            fun requestCode(): LoginRequestCode = LOGIN_REQUEST_CODE
+        }
+
+        @Binds
+        abstract fun activity(loginActivity: LoginActivity): Activity
+    }
 }
 
 

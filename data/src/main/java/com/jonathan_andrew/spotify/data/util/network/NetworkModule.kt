@@ -2,22 +2,31 @@ package com.jonathan_andrew.spotify.data.util.network
 
 import com.jonathan_andrew.spotify.data.BuildConfig
 import com.jonathan_andrew.spotify.domain.use_cases.auth.AuthManager
+import dagger.Module
+import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 
-object ApiHttpClientFactory {
-    fun createHttpClient(authManager: AuthManager): OkHttpClient {
-        return OkHttpClient.Builder()
-                .addInterceptor(AuthenticationInterceptor(authManager))
-                .addInterceptor(StandardHeadersInterceptor())
-                .apply {
-                    if (BuildConfig.DEBUG) {
-                        addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+@Module
+abstract class NetworkModule {
+
+    @Module
+    companion object {
+        @Provides
+        @JvmStatic
+        fun okHttpClient(authManager: AuthManager): OkHttpClient {
+            return OkHttpClient.Builder()
+                    .addInterceptor(AuthenticationInterceptor(authManager))
+                    .addInterceptor(StandardHeadersInterceptor())
+                    .apply {
+                        if (BuildConfig.DEBUG) {
+                            addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+                        }
                     }
-                }
-                .build()
+                    .build()
+        }
     }
 
     /**

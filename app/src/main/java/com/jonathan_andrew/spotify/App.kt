@@ -3,36 +3,42 @@ package com.jonathan_andrew.spotify
 import android.app.Application
 import android.support.text.emoji.EmojiCompat
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig
-import com.jonathan_andrew.spotify.data.auth.LocalAuthManager
 import com.jonathan_andrew.spotify.data.util.database.Database
-import com.jonathan_andrew.spotify.data.util.network.ApiHttpClientFactory
-import com.jonathan_andrew.spotify.domain.use_cases.auth.AuthManager
+import com.jonathan_andrew.spotify.di.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import okhttp3.OkHttpClient
 import timber.log.Timber
+import javax.inject.Inject
 
-class App : Application() {
 
+class App : Application(), HasAndroidInjector {
     companion object Singletons {
         lateinit var instance: App
     }
 
-    val authManager: AuthManager by lazy {
-        LocalAuthManager(this)
-    }
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
-    val httpClient: OkHttpClient by lazy {
-        ApiHttpClientFactory.createHttpClient(authManager)
-    }
+    @Inject
+    lateinit var httpClient: OkHttpClient
 
     override fun onCreate() {
         super.onCreate()
         instance = this
+        DaggerAppComponent.builder()
+                .applicationContext(applicationContext)
+                .build().inject(this)
         initLeakDetector()
         initLogging()
         initEmojiCompat()
         initDatabase()
+
     }
+
+    override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
     private fun initEmojiCompat() {
         val config = BundledEmojiCompatConfig(this)

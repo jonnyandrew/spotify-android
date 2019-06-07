@@ -55,7 +55,7 @@ class ArtistActivity : AppCompatActivity(), MviView<ArtistUiEvent, ArtistUiModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_artist)
-        presenter.begin()
+        presenter.begin(this)
     }
 
     override val events: Observable<ArtistUiEvent>

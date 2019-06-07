@@ -10,15 +10,16 @@ import io.reactivex.subjects.BehaviorSubject
 import timber.log.Timber
 import java.lang.ref.WeakReference
 
-abstract internal class MviPresenter<E, M>(view: MviView<E, M>) {
+abstract internal class MviPresenter<E, M>() {
 
-    private val viewRef: WeakReference<MviView<E, M>> = WeakReference(view)
+    private lateinit var viewRef: WeakReference<MviView<E, M>>
     private val subscriptions: CompositeDisposable = CompositeDisposable()
     private val viewSubscriptions = CompositeDisposable()
 
     private val uiModel = BehaviorSubject.create<M>()
 
-    fun begin() {
+    fun begin(view: MviView<E, M>) {
+        viewRef = WeakReference(view)
         viewRef.get()?.let { view ->
             val results = view.events
                     .compose(eventTransformer)

@@ -7,14 +7,14 @@ import com.jonathan_andrew.spotify.domain.use_cases.auth.LoginAction
 import com.jonathan_andrew.spotify.domain.use_cases.auth.LoginResult
 import com.jonathan_andrew.spotify.domain.use_cases.auth.LoginUseCase
 import com.jonathan_andrew.spotify.ui.MviPresenter
-import com.jonathan_andrew.spotify.ui.MviView
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.rxkotlin.merge
+import javax.inject.Inject
 
-internal class LoginMviPresenter(view: MviView<LoginUiEvent, LoginUiModel>,
-                                 private val authUseCase: LoginUseCase)
-    : MviPresenter<LoginUiEvent, LoginUiModel>(view) {
+internal class LoginMviPresenter @Inject constructor(
+        private val authUseCase: LoginUseCase
+) : MviPresenter<LoginUiEvent, LoginUiModel>() {
 
     override val eventTransformer: ObservableTransformer<LoginUiEvent, Action>
         get() = ObservableTransformer { upstream ->

@@ -17,7 +17,7 @@ import timber.log.Timber
 
 internal class ArtistMviPresenter(view: MviView<ArtistUiEvent, ArtistUiModel>,
                                   private val getArtistUseCase: GetArtistUseCase)
-    : MviPresenter<ArtistUiEvent, ArtistUiModel>(view) {
+    : MviPresenter<ArtistUiEvent, ArtistUiModel>() {
 
     override val eventTransformer: ObservableTransformer<ArtistUiEvent, Action>
         get() = ObservableTransformer { upstream ->

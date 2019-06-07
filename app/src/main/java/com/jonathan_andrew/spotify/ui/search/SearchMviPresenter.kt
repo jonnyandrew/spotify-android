@@ -16,7 +16,7 @@ import timber.log.Timber
 
 internal class SearchMviPresenter(view: MviView<SearchUiEvent, SearchUiModel>,
                                   private val searchUseCase: SearchUseCase)
-    : MviPresenter<SearchUiEvent, SearchUiModel>(view) {
+    : MviPresenter<SearchUiEvent, SearchUiModel>() {
 
     override val eventTransformer: ObservableTransformer<SearchUiEvent, Action>
         get() = ObservableTransformer { upstream ->

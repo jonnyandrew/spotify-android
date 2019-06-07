@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-kapt'
+
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -43,6 +45,15 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.5.1'
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+
+    implementation 'com.google.dagger:dagger:2.23.1'
+    kapt 'com.google.dagger:dagger-compiler:2.23.1'
+
+    implementation 'com.google.dagger:dagger-android:2.23.1'
+    implementation 'com.google.dagger:dagger-android-support:2.23.1'
+    kapt 'com.google.dagger:dagger-android-processor:2.23.1'
+
 
     implementation "com.android.support:support-emoji-bundled:26.1.0"
 

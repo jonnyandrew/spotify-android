@@ -3,7 +3,9 @@ package com.jonathan_andrew.spotify.data.auth
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import com.jonathan_andrew.spotify.domain.di.ActivityScope
 import com.jonathan_andrew.spotify.domain.entities.Credentials
+import com.jonathan_andrew.spotify.domain.entities.auth.LoginRequestCode
 import com.jonathan_andrew.spotify.domain.use_cases.auth.AuthManager
 import com.jonathan_andrew.spotify.domain.use_cases.auth.LoginManager
 import io.reactivex.Observable
@@ -11,18 +13,20 @@ import io.reactivex.rxkotlin.merge
 import java.net.URI
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 /**
  * Stores and retrieves he API access token in the shared preferences.
  * If the credentials do not exist, the oauth 2 flow is initiated here.
  */
-class RemoteLoginManager(
+@ActivityScope
+class RemoteLoginManager @Inject constructor(
         private val context: Activity,
         private val authManager: AuthManager,
         private val loginCallbackUris: Observable<String>,
         private val loginResultCodes: Observable<Int>,
-        private val activityLoginRequestCode: Int
+        private val activityLoginRequestCode: LoginRequestCode
 ) : LoginManager {
 
     private lateinit var randomState: String
