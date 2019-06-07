@@ -15,7 +15,7 @@ import com.jonathan_andrew.spotify.data.search.SearchApi
 import com.jonathan_andrew.spotify.data.util.network.ConnectivityChangeReceiver
 import com.jonathan_andrew.spotify.domain.use_cases.artists.GetArtistUseCase
 import com.jonathan_andrew.spotify.ui.MviView
-import com.jonathan_andrew.spotify.ui.util.gone
+import com.jonathan_andrew.spotify.ui.gone
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.merge

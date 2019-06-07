@@ -1,7 +1,7 @@
 package com.jonathan_andrew.spotify.data.util.network
 
 import com.jonathan_andrew.spotify.data.BuildConfig
-import com.jonathan_andrew.spotify.domain.use_cases.auth.AuthManager
+import com.jonathan_andrew.spotify.domain.use_cases.auth.CredentialsRepository
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -16,9 +16,9 @@ abstract class NetworkModule {
     companion object {
         @Provides
         @JvmStatic
-        fun okHttpClient(authManager: AuthManager): OkHttpClient {
+        fun okHttpClient(credentialsRepository: CredentialsRepository): OkHttpClient {
             return OkHttpClient.Builder()
-                    .addInterceptor(AuthenticationInterceptor(authManager))
+                    .addInterceptor(AuthenticationInterceptor(credentialsRepository))
                     .addInterceptor(StandardHeadersInterceptor())
                     .apply {
                         if (BuildConfig.DEBUG) {

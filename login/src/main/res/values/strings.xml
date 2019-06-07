@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_button">Log in with Spotify</string>
+    <string name="login_text">Lets get started! &#128640;</string>
+    <string name="login_success">Logged in successfully!</string>
+    <string name="login_failure">Log in failed.</string>
+    <string name="login_in_progress">Logging in…</string>
+</resources>

@@ -1,15 +1,15 @@
 package com.jonathan_andrew.spotify.data.util.network
 
 import com.jonathan_andrew.spotify.domain.entities.Credentials
-import com.jonathan_andrew.spotify.domain.use_cases.auth.AuthManager
+import com.jonathan_andrew.spotify.domain.use_cases.auth.CredentialsRepository
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AuthenticationInterceptor(private val authManager: AuthManager) : Interceptor {
+class AuthenticationInterceptor(private val credentialsRepository: CredentialsRepository) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
-        val credentials = authManager.getCredentials().blockingFirst()
+        val credentials = credentialsRepository.get().blockingFirst()
 
         when (credentials) {
             is Credentials.Unauthorized -> {
@@ -22,7 +22,7 @@ class AuthenticationInterceptor(private val authManager: AuthManager) : Intercep
                 val response = chain.proceed(authenticatedRequest)
 
                 if (response.code() == 401) {
-                    authManager.setCredentials(Credentials.Unauthorized()).blockingGet()
+                    credentialsRepository.set(Credentials.Unauthorized()).blockingGet()
                 }
                 return response
             }

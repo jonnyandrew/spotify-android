@@ -15,10 +15,10 @@ import com.jonathan_andrew.spotify.data.search.SearchApi
 import com.jonathan_andrew.spotify.data.tracks.RemoteTracksRepository
 import com.jonathan_andrew.spotify.data.util.network.ConnectivityChangeReceiver
 import com.jonathan_andrew.spotify.domain.use_cases.search.SearchUseCase
+import com.jonathan_andrew.spotify.login.ui.LoginActivity
 import com.jonathan_andrew.spotify.ui.MviView
 import com.jonathan_andrew.spotify.ui.artist.ArtistActivity
-import com.jonathan_andrew.spotify.ui.login.LoginActivity
-import com.jonathan_andrew.spotify.ui.util.gone
+import com.jonathan_andrew.spotify.ui.gone
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.merge
